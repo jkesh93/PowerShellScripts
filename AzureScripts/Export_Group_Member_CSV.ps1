@@ -1,0 +1,37 @@
+######################
+### What this does ###
+######################
+# Connects to Azure
+# Gets Group Members
+# Exports to CSV
+
+
+######################
+###    Variables   ###
+######################
+# SET GROUP NAME
+$groupName = '';
+
+# SET EXPORT PATH
+$exportPath = '.\GroupMembers.csv'
+
+######################
+###     Script     ###
+######################
+Connect-AzureAD
+
+$groupMembers = Get-AzureADGroup -SearchString $groupName | Get-AzureADGroupMember
+
+$groupMembers
+
+Write-Host -ForegroundColor Yellow 'Export to: $exportPath?'
+$input = Read-Host
+
+if($input -eq 'y')
+{
+    Add-Content -Path $exportPath -Value $groupMembers
+}
+else
+{
+    Write-Host -ForegroundColor Red "Operation Cancelled"
+}
