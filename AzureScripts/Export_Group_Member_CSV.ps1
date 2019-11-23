@@ -20,18 +20,24 @@ $exportPath = '.\GroupMembers.csv'
 ######################
 Connect-AzureAD
 
-$groupMembers = Get-AzureADGroup -SearchString $groupName | Get-AzureADGroupMember
-
-$groupMembers
-
-Write-Host -ForegroundColor Yellow 'Export to: $exportPath?'
-$input = Read-Host
-
-if($input -eq 'y')
+if($groupName -eq '')
 {
-    Add-Content -Path $exportPath -Value $groupMembers
+    Write-Host -ForegroundColor Yellow "Please enter a group name: ";
+    $groupName = Read-Host;
 }
 else
 {
-    Write-Host -ForegroundColor Red "Operation Cancelled"
+    $groupMembers = Get-AzureADGroup -SearchString $groupName | Get-AzureADGroupMember;
+
+    Write-Host -ForegroundColor Yellow 'Export to: $exportPath?';
+    $input = Read-Host;
+
+    if($input -eq 'y')
+    {
+        Add-Content -Path $exportPath -Value $groupMembers;
+    }
+    else
+    {
+        Write-Host -ForegroundColor Red "Operation Cancelled";
+    }
 }
