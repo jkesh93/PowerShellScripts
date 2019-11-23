@@ -25,19 +25,28 @@ if($groupName -eq '')
     Write-Host -ForegroundColor Yellow "Please enter a group name: ";
     $groupName = Read-Host;
 }
+
+$group = Get-AzureADGroup -SearchString $groupName | Select-Object ObjectId
+$groupId = $group.ObjectId
+$groupMembers = Get-AzureADGroupMember -ObjectId $groupId;
+
+Write-Host -ForegroundColor Yellow "Export to: $exportPath ?";
+$input = Read-Host;
+
+if($input -eq 'y')
+{
+    
+    Add-Content -Path $exportPath -Value "ObjectId,DisplayName,UserPrincipalName,UserType"
+    foreach($member in $groupMembers)
+    {
+        $oid = $member.ObjectId
+        $dn = $member.DisplayName
+        $upn = $member.UserPrincipalName
+        $ut = $member.UserType
+        Add-Content -Path $exportPath -Value "$oid,$dn,$upn,$ut"
+    }
+}
 else
 {
-    $groupMembers = Get-AzureADGroup -SearchString $groupName | Get-AzureADGroupMember;
-
-    Write-Host -ForegroundColor Yellow 'Export to: $exportPath?';
-    $input = Read-Host;
-
-    if($input -eq 'y')
-    {
-        Add-Content -Path $exportPath -Value $groupMembers;
-    }
-    else
-    {
-        Write-Host -ForegroundColor Red "Operation Cancelled";
-    }
+    Write-Host -ForegroundColor Red "Operation Cancelled";
 }
