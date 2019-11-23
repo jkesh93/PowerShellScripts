@@ -26,7 +26,7 @@ $loggingSwitch = 1;
 ######################
 
 # Create Log file...
-Add-Content -Path $exportPath -Value "ObjectId,DisplayName,UserPrincipalName,UserType,Role";
+Add-Content -Path $exportPath -Value "ObjectId,UserPrincipalName,UserType,Role";
 
 #Connect-AzureAD
 
@@ -74,13 +74,11 @@ else
         {
             Write-Host -ForegroundColor Red "Unable to add user $dn";
         }
-        # Fetch role membership for role to confirm
-        Get-AzureADDirectoryRoleMember -ObjectId $role.ObjectId | Get-AzureADUser;
 
         # If logging, log...
         if($loggingSwitch -eq 1)
         {
-            Add-Content -Path $exportPath -Value "$oid,$dn,$upn,$ut,$roleToAssign";
+            Add-Content -Path $exportPath -Value "$oid,$upn,$ut,$roleToAssign";
         }
     }
 }
