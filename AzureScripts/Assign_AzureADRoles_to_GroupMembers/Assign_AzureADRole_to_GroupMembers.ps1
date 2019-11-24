@@ -35,6 +35,7 @@ if($groupName -eq '')
     Write-Host -ForegroundColor Yellow "Please enter a group name: ";
     $groupName = Read-Host;
 }
+
 if($roleToAssign -eq '')
 {
     Write-Host -ForegroundColor Yellow "Please enter a role to assign: ";
@@ -85,6 +86,11 @@ else
             {
                 Write-Host -ForegroundColor Red "Unable to write to log file for user $upn";
             }
+        }
+        else
+        {
+            # If logging is off, close
+            Write-Host -ForegroundColor green "NOTE: Logging is off, script is complete.";
         }
     }
 }
