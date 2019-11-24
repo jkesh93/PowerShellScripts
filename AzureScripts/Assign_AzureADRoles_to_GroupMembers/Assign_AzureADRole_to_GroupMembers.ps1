@@ -24,11 +24,10 @@ $loggingSwitch = 1;
 ######################
 ###     Script     ###
 ######################
-
 # Create Log file...
 Add-Content -Path $exportPath -Value "ObjectId,UserPrincipalName,UserType,Role";
 
-#Connect-AzureAD
+Connect-AzureAD
 
 # If $groupName is not set
 if($groupName -eq '')
@@ -78,7 +77,14 @@ else
         # If logging, log...
         if($loggingSwitch -eq 1)
         {
-            Add-Content -Path $exportPath -Value "$oid,$upn,$ut,$roleToAssign";
+            try
+            {
+                Add-Content -Path $exportPath -Value "$oid,$upn,$ut,$roleToAssign";
+            }
+            catch
+            {
+                Write-Host -ForegroundColor Red "Unable to write to log file for user $upn";
+            }
         }
     }
 }
