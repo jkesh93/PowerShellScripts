@@ -93,4 +93,26 @@ function setArrayListKeys()
     Write-Host -ForegroundColor green "Successfully added all keys.";
 }
 
-setArrayListKeys
+function getKeysArrayCount()
+{
+    $c = $arrayList.Count
+    Write-Host $c
+    return $c;
+}
+
+function getKeySetValue($key,$val)
+{
+    try
+    {
+        foreach($item in $arrayList)
+        {
+            $item
+        }
+    }
+    catch
+    {
+        Write-Host "unable to find key $key";
+    }
+}
+
+setArrayListKeys;
