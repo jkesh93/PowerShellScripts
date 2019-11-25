@@ -8,8 +8,8 @@
 ######################
 ###    Variables   ###
 ######################
-$csvFile = '.\Intune_Managed_Devices.csv';
-$csvOutput = '.\OutputFile.csv';
+$csvFile = '.\INPUTFILENAME.csv';
+$csvOutput = '.\OUTPUTFILENAME.csv';
 $headersArrayList = [System.Collections.ArrayList]@();
 $returnedRowsArrayList = [System.Collections.ArrayList]@();
 
