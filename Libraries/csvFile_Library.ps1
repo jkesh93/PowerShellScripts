@@ -1,12 +1,20 @@
 ######################
 ### What this does ###
 ######################
-# Script library for CSV files
+# Function library for CSV files
+
+######################
+###     Inputs     ###
+######################
+#
+# ADJUST THESE PARAMETERS AS NEEDED
+#
+
+$csvFileName = "INTPUTFILENAME"
 
 ######################
 ###    Variables   ###
 ######################
-$csvFileName = "INPUTFILENAME"
 $csvFile = ".\$csvFileName.csv"
 $headersArrayList = [System.Collections.ArrayList]@()
 
@@ -66,3 +74,15 @@ function exportUniqueColumnEntries($column)
     $outArray | Export-Csv -Path .\"$column.csv" -NoTypeInformation
 }
 
+<#
+FUNCTION NAME: getCSVRowCount
+DESCRIPTION: Returns number of rows in CSV file
+#>
+
+function getCSVRowCount()
+{
+    # Variable
+    $result = $csvFile.length
+
+    return $result
+}
